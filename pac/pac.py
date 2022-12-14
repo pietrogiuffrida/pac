@@ -48,7 +48,7 @@ class Pac:
                                     "tcp --port {port} --cidr {ip}/32 "
     cmd_ec2_stop_instance = "aws ec2 stop-instances --instance-ids {}"
     url_current_ip = "http://api.ipify.org/"
-    crif_proxy = "212.7.76.116:3128"
+    proxy = ""
 
     def __init__(self, proxy=False):
 
