@@ -48,10 +48,12 @@ class Pac:
                                     "tcp --port {port} --cidr {ip}/32 "
     cmd_ec2_stop_instance = "aws ec2 stop-instances --instance-ids {}"
     url_current_ip = "http://api.ipify.org/"
-    crif_proxy = "212.7.76.116:3128"
 
-    def __init__(self, proxy=False):
+    def __init__(self, proxy):
+        """
 
+        :type proxy: str, the http url of the proxy, something like user:password@url:port
+        """
         self.proxy = proxy
         if proxy:
             self.set_proxy()
@@ -75,8 +77,8 @@ class Pac:
         self.log_infos()
 
     def set_proxy(self):
-        os.environ["HTTP_PROXY"] = self.crif_proxy
-        os.environ["HTTPS_PROXY"] = self.crif_proxy
+        os.environ["HTTP_PROXY"] = self.proxy
+        os.environ["HTTPS_PROXY"] = self.proxy
 
     def stop_instance(self, instance_id):
         cmd = self.cmd_ec2_stop_instance.format(instance_id)
@@ -105,6 +107,9 @@ class Pac:
 
         if update:
             self.get_security_groups()
+
+        if not self.target:
+            raise Exception("Log infos requires setting self.target")
 
         logging.info(
             "Instance {}, status {}, address {}, type {}, sec {}".format(
