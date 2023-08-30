@@ -178,7 +178,7 @@ class Pac:
 
     @staticmethod
     def _run_process(cmd, cmd_description=None):
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         pipe = p.communicate()
         if p.returncode != 0:
             msg = "Command {} returns error code {}".format(
